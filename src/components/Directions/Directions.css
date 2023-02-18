@@ -1,0 +1,17 @@
+.title-secondary {
+  text-align: center;
+  font-size: 2rem;
+  color: #dad806;
+  font-family: "Titan One", cursive;
+  text-shadow: 0px 0px 10px black;
+}
+
+li {
+  color: white;
+}
+
+.directions-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

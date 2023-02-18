@@ -1,0 +1,33 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.App {
+  min-height: 100vh;
+  background-image: url("../public//images/background-image.jpg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  max-width: 90vw;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  /* min-height: fit-content; */
+}
+
+@media only screen and (min-width: 600px) {
+  .main-content {
+    flex-direction: row;
+    max-width: 80vw;
+  }
+}
