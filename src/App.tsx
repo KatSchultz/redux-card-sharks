@@ -7,8 +7,15 @@ import { PlayingCard } from "./types";
 import Modal from "./components/Modal/Modal";
 import { Container } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import Counter from "./features/counter/Counter";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "./app/store";
+import { matchIncrement, reset } from "./features/matches/matchSlice";
 
 function App() {
+  const matchesRedux = useSelector((state: RootState) => state.matches.matches);
+  const dispatch = useDispatch();
+
   const [activeCards, setActiveCards] = useState<PlayingCard[]>([
     { id: 1, name: "stingray", image: "/images/img-0.png" },
     { id: 2, name: "stingray", image: "/images/img-0.png" },
@@ -43,7 +50,8 @@ function App() {
   }, [gameSize]);
 
   useEffect(() => {
-    if (matches === gameSize / 2) {
+    if (matchesRedux === gameSize / 2) {
+      // if (matches === gameSize / 2) {
       setWinStatus(true);
       setTimerActive(false);
       handleOpenModal();
@@ -92,7 +100,8 @@ function App() {
     setWinStatus(false);
     setFoundPairs([]);
     setFlippedCards([]);
-    setMatches(0);
+    dispatch(reset(0));
+    // setMatches(0);
     setNoMatchFlip(0);
     setFlipCount(0);
     setMoveCount(0);
@@ -117,7 +126,8 @@ function App() {
   function matchCheck() {
     setTimeout(() => {
       if (flippedCards[0].name === flippedCards[1].name) {
-        setMatches((prev) => prev + 1);
+        dispatch(matchIncrement(1));
+        // setMatches((prev) => prev + 1);
         setFoundPairs((prev) => [...prev, flippedCards[0].name]);
       } else {
         setNoMatchFlip((prev) => prev + 1);
@@ -161,6 +171,7 @@ function App() {
 
   return (
     <div className="App">
+      <Counter />
       <Modal
         modalDisplay={openModal}
         closeModal={handleCloseModal}
