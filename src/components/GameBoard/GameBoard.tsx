@@ -4,9 +4,10 @@ import Card from "../Cards/PlayingCard";
 import { PlayingCard } from "../../types";
 import CardDirectImport from "../Cards/PlayingCardDirectImport";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
 
 interface Props {
-  cards: PlayingCard[];
   flippedCards: PlayingCard[];
   trackFlips: (card: PlayingCard) => void;
   noMatchFlip: number;
@@ -18,7 +19,6 @@ interface Props {
   gameOver: boolean;
 }
 export default function GameBoard({
-  cards,
   flippedCards,
   trackFlips,
   noMatchFlip,
@@ -29,6 +29,10 @@ export default function GameBoard({
   gameCount,
   gameOver,
 }: Props) {
+  const cardsRedux = useSelector(
+    (state: RootState) => state.gameCards.gameCards
+  );
+
   return (
     // <div className="square">
     //   <picture>
@@ -40,7 +44,7 @@ export default function GameBoard({
     //   </picture>
     // </div>
     <div className="game-board">
-      {cards.map((card) => (
+      {cardsRedux.map((card: PlayingCard) => (
         <Card
           key={card.id}
           card={card}

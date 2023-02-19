@@ -11,25 +11,29 @@ import Counter from "./features/counter/Counter";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "./app/store";
 import { matchIncrement, reset } from "./features/matches/matchSlice";
+import { shuffleCards } from "./features/gameCards/gameCardsSlice";
 
 function App() {
   const matchesRedux = useSelector((state: RootState) => state.matches.matches);
+  const cardsRedux = useSelector(
+    (state: RootState) => state.gameCards.gameCards
+  );
   const dispatch = useDispatch();
 
-  const [activeCards, setActiveCards] = useState<PlayingCard[]>([
-    { id: 1, name: "stingray", image: "/images/img-0.png" },
-    { id: 2, name: "stingray", image: "/images/img-0.png" },
-    { id: 3, name: "blue hippo tang", image: "/images/img-1.png" },
-    { id: 4, name: "blue hippo tang", image: "/images/img-1.png" },
-    { id: 5, name: "clownfish", image: "/images/img-2.png" },
-    { id: 6, name: "clownfish", image: "/images/img-2.png" },
-    { id: 7, name: "octopus", image: "/images/img-3.png" },
-    { id: 8, name: "octopus", image: "/images/img-3.png" },
-    { id: 9, name: "sea turtle", image: "/images/img-4.png" },
-    { id: 10, name: "sea turtle", image: "/images/img-4.png" },
-    { id: 11, name: "whale shark", image: "/images/img-5.png" },
-    { id: 12, name: "whale shark", image: "/images/img-5.png" },
-  ]);
+  // const [activeCards, setActiveCards] = useState<PlayingCard[]>([
+  //   { id: 1, name: "stingray", image: "/images/img-0.png" },
+  //   { id: 2, name: "stingray", image: "/images/img-0.png" },
+  //   { id: 3, name: "blue hippo tang", image: "/images/img-1.png" },
+  //   { id: 4, name: "blue hippo tang", image: "/images/img-1.png" },
+  //   { id: 5, name: "clownfish", image: "/images/img-2.png" },
+  //   { id: 6, name: "clownfish", image: "/images/img-2.png" },
+  //   { id: 7, name: "octopus", image: "/images/img-3.png" },
+  //   { id: 8, name: "octopus", image: "/images/img-3.png" },
+  //   { id: 9, name: "sea turtle", image: "/images/img-4.png" },
+  //   { id: 10, name: "sea turtle", image: "/images/img-4.png" },
+  //   { id: 11, name: "whale shark", image: "/images/img-5.png" },
+  //   { id: 12, name: "whale shark", image: "/images/img-5.png" },
+  // ]);
   const [gameSize, setGameSize] = useState(12);
   const [flipCount, setFlipCount] = useState(0);
   const [moveCount, setMoveCount] = useState(0);
@@ -45,9 +49,9 @@ function App() {
   const [openModal, setOpenModal] = useState(false);
   const [gameCount, setGameCount] = useState(0);
 
-  useEffect(() => {
-    setActiveCards(cards.slice(0, gameSize));
-  }, [gameSize]);
+  // useEffect(() => {
+  //   setActiveCards(cards.slice(0, gameSize));
+  // }, [gameSize]);
 
   useEffect(() => {
     if (matchesRedux === gameSize / 2) {
@@ -93,9 +97,10 @@ function App() {
   function startGame() {
     setTimer(startTime);
     setGameCount((prev) => prev + 1);
-    const cardArray = cards.slice(0, gameSize);
-    const shuffledArray = justShuffle(cardArray);
-    setActiveCards(shuffledArray);
+    // const cardArray = cardsRedux;
+    // const shuffledArray = justShuffle(cardArray);
+    dispatch(shuffleCards(0));
+    // setActiveCards(shuffledArray);
     setGameOverStatus(false);
     setWinStatus(false);
     setFoundPairs([]);
@@ -198,7 +203,6 @@ function App() {
         />
 
         <GameBoard
-          cards={activeCards}
           flippedCards={flippedCards}
           trackFlips={trackFlippedCards}
           noMatchFlip={noMatchFlip}
