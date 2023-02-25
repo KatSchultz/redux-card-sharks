@@ -176,7 +176,6 @@ function App() {
 
   return (
     <div className="App">
-      <Counter />
       <Modal
         modalDisplay={openModal}
         closeModal={handleCloseModal}
