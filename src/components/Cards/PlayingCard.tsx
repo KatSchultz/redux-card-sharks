@@ -2,6 +2,9 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import "./PlayingCard.css";
 import { PlayingCard } from "../../types";
 import Paper from "@mui/material/Paper";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../app/store";
+import { trackFlips } from "../../features/flippedCards/flippedCardsSlice";
 
 interface Props {
   card: PlayingCard;
@@ -18,8 +21,8 @@ interface Props {
 
 export default function Card({
   card,
-  flippedCards,
-  trackFlips,
+  // flippedCards,
+  // trackFlips,
   noMatchFlip,
   foundPairs,
   flipCount,
@@ -28,12 +31,17 @@ export default function Card({
   gameCount,
   gameOver,
 }: Props) {
+  const flippedCardsRedux = useSelector(
+    (state: RootState) => state.flippedCards.flippedCards
+  );
   const [cardRevealed, setCardRevealed] = useState(false);
   const [clickable, setClickable] = useState(false);
   const [alreadyMatched, setAlreadyMatched] = useState(false);
   const frontOfCard = "/images/frontOfCard.png";
   const hiddenClass = alreadyMatched ? "hidden" : "";
   const animateFlip = cardRevealed ? " flip" : "";
+
+  const dispatch = useDispatch();
 
   //flips mismatched pair back over
   useEffect(() => {
@@ -56,18 +64,19 @@ export default function Card({
     if (flipCount < 2 && timerActive) {
       setClickable(true);
 
-      if (flippedCards[0] && flippedCards[0].id === card.id) {
+      if (flippedCardsRedux[0] && flippedCardsRedux[0].id === card.id) {
         setClickable(false); //prevents flipped card from matching with itself
       }
     } else {
       setClickable(false);
     }
-  }, [flipCount, timerActive, flippedCards, card.id]);
+  }, [flipCount, timerActive, flippedCardsRedux, card.id]);
 
   function clickHandler() {
     setCardRevealed(true);
     setClickable(false);
-    trackFlips(card);
+    dispatch(trackFlips(card));
+    // trackFlips(card);
     setFlipCount((prev) => prev + 1);
   }
 

@@ -12,11 +12,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "./app/store";
 import { matchIncrement, reset } from "./features/matches/matchSlice";
 import { shuffleCards } from "./features/gameCards/gameCardsSlice";
+import { resetFlippedCards } from "./features/flippedCards/flippedCardsSlice";
 
 function App() {
   const matchesRedux = useSelector((state: RootState) => state.matches.matches);
-  const cardsRedux = useSelector(
-    (state: RootState) => state.gameCards.gameCards
+  const flippedCardsRedux = useSelector(
+    (state: RootState) => state.flippedCards.flippedCards
   );
   const dispatch = useDispatch();
 
@@ -69,30 +70,30 @@ function App() {
     }
   }, [timer, winStatus]);
 
-  const cards = [
-    { id: 1, name: "stingray", image: "/images/img-0.png" },
-    { id: 2, name: "stingray", image: "/images/img-0.png" },
-    { id: 3, name: "blue hippo tang", image: "/images/img-1.png" },
-    { id: 4, name: "blue hippo tang", image: "/images/img-1.png" },
-    { id: 5, name: "clownfish", image: "/images/img-2.png" },
-    { id: 6, name: "clownfish", image: "/images/img-2.png" },
-    { id: 7, name: "octopus", image: "/images/img-3.png" },
-    { id: 8, name: "octopus", image: "/images/img-3.png" },
-    { id: 9, name: "sea turtle", image: "/images/img-4.png" },
-    { id: 10, name: "sea turtle", image: "/images/img-4.png" },
-    { id: 11, name: "whale shark", image: "/images/img-5.png" },
-    { id: 12, name: "whale shark", image: "/images/img-5.png" },
-    { id: 13, name: "great white shark", image: "/images/img-6.png" },
-    { id: 14, name: "great white shark", image: "/images/img-6.png" },
-    { id: 15, name: "squid", image: "/images/img-7.png" },
-    { id: 16, name: "squid", image: "/images/img-7.png" },
-    { id: 17, name: "orca", image: "/images/img-8.png" },
-    { id: 18, name: "orca", image: "/images/img-8.png" },
-    { id: 19, name: "crab", image: "/images/img-9.png" },
-    { id: 20, name: "crab", image: "/images/img-9.png" },
-    { id: 21, name: "seahorse", image: "/images/img-10.png" },
-    { id: 22, name: "seahorse", image: "/images/img-10.png" },
-  ];
+  // const cards = [
+  // { id: 1, name: "stingray", image: "/images/img-0.png" },
+  // { id: 2, name: "stingray", image: "/images/img-0.png" },
+  // { id: 3, name: "blue hippo tang", image: "/images/img-1.png" },
+  // { id: 4, name: "blue hippo tang", image: "/images/img-1.png" },
+  // { id: 5, name: "clownfish", image: "/images/img-2.png" },
+  // { id: 6, name: "clownfish", image: "/images/img-2.png" },
+  // { id: 7, name: "octopus", image: "/images/img-3.png" },
+  // { id: 8, name: "octopus", image: "/images/img-3.png" },
+  // { id: 9, name: "sea turtle", image: "/images/img-4.png" },
+  // { id: 10, name: "sea turtle", image: "/images/img-4.png" },
+  // { id: 11, name: "whale shark", image: "/images/img-5.png" },
+  // { id: 12, name: "whale shark", image: "/images/img-5.png" },
+  // { id: 13, name: "great white shark", image: "/images/img-6.png" },
+  // { id: 14, name: "great white shark", image: "/images/img-6.png" },
+  // { id: 15, name: "squid", image: "/images/img-7.png" },
+  // { id: 16, name: "squid", image: "/images/img-7.png" },
+  // { id: 17, name: "orca", image: "/images/img-8.png" },
+  // { id: 18, name: "orca", image: "/images/img-8.png" },
+  // { id: 19, name: "crab", image: "/images/img-9.png" },
+  // { id: 20, name: "crab", image: "/images/img-9.png" },
+  // { id: 21, name: "seahorse", image: "/images/img-10.png" },
+  // { id: 22, name: "seahorse", image: "/images/img-10.png" },
+  // ];
 
   function startGame() {
     setTimer(startTime);
@@ -130,10 +131,10 @@ function App() {
 
   function matchCheck() {
     setTimeout(() => {
-      if (flippedCards[0].name === flippedCards[1].name) {
+      if (flippedCardsRedux[0].name === flippedCardsRedux[1].name) {
         dispatch(matchIncrement(1));
         // setMatches((prev) => prev + 1);
-        setFoundPairs((prev) => [...prev, flippedCards[0].name]);
+        setFoundPairs((prev) => [...prev, flippedCardsRedux[0].name]);
       } else {
         setNoMatchFlip((prev) => prev + 1);
       }
@@ -141,9 +142,12 @@ function App() {
     }, 800);
     setMoveCount((prev) => prev + 1);
     setFlippedCards([]);
+    dispatch(resetFlippedCards());
   }
 
-  flippedCards.length === 2 && matchCheck();
+  console.log(flippedCardsRedux);
+
+  flippedCardsRedux.length === 2 && matchCheck();
 
   function resetGame() {
     setGameOverStatus(false);
