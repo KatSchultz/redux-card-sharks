@@ -4,13 +4,13 @@ import { PlayingCard } from "../../types";
 interface FlippedCardsState {
   flippedCards: PlayingCard[];
   currentFlipCount: number;
-  totalFlipCount: number;
+  totalMoveCount: number;
 }
 
 const initialState: FlippedCardsState = {
   flippedCards: [],
   currentFlipCount: 0,
-  totalFlipCount: 0,
+  totalMoveCount: 0,
 };
 
 export const flippedCardsSlice = createSlice({
@@ -22,14 +22,18 @@ export const flippedCardsSlice = createSlice({
     },
     resetFlippedCards: (state) => {
       state.flippedCards = [];
+      // state.currentFlipCount = 0;
     },
     incrementCurrentFlipCount: (state) => {
       state.currentFlipCount += 1;
     },
-    incrementTotalFlipCount: (state) => {
-      state.totalFlipCount += 1;
+    resetCurrentFlipCount: (state) => {
+      state.currentFlipCount = 0;
     },
-    resetCounters: (state) => {
+    incrementTotalMoveCount: (state) => {
+      state.totalMoveCount += 1;
+    },
+    resetFlipTracking: (state) => {
       state = initialState;
     },
   },
@@ -39,8 +43,9 @@ export const {
   trackFlips,
   resetFlippedCards,
   incrementCurrentFlipCount,
-  incrementTotalFlipCount,
-  resetCounters,
+  incrementTotalMoveCount,
+  resetCurrentFlipCount,
+  resetFlipTracking,
 } = flippedCardsSlice.actions;
 
 export default flippedCardsSlice.reducer;

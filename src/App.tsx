@@ -10,17 +10,26 @@ import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import Counter from "./features/counter/Counter";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "./app/store";
-import { matchIncrement, reset } from "./features/matches/matchSlice";
+import {
+  matchIncrement,
+  resetMatches,
+  trackMatchedCards,
+} from "./features/matches/matchSlice";
 import { shuffleCards } from "./features/gameCards/gameCardsSlice";
 import {
-  resetCounters,
+  resetFlipTracking,
   resetFlippedCards,
+  incrementTotalMoveCount,
+  resetCurrentFlipCount,
 } from "./features/flippedCards/flippedCardsSlice";
 
 function App() {
   const matchesRedux = useSelector((state: RootState) => state.matches.matches);
   const flippedCardsRedux = useSelector(
     (state: RootState) => state.flippedCards.flippedCards
+  );
+  const currentFlipCount = useSelector(
+    (state: RootState) => state.flippedCards.currentFlipCount
   );
   const dispatch = useDispatch();
 
@@ -57,7 +66,7 @@ function App() {
   //   setActiveCards(cards.slice(0, gameSize));
   // }, [gameSize]);
 
-  console.log(matchesRedux);
+  // console.log(matchesRedux);
 
   useEffect(() => {
     if (matchesRedux === gameSize / 2) {
@@ -74,6 +83,12 @@ function App() {
       handleOpenModal();
     }
   }, [timer, winStatus]);
+
+  useEffect(() => {
+    if (currentFlipCount === 2) {
+      matchCheck();
+    }
+  }, [currentFlipCount]);
 
   // const cards = [
   // { id: 1, name: "stingray", image: "/images/img-0.png" },
@@ -110,10 +125,10 @@ function App() {
     setGameOverStatus(false);
     setWinStatus(false);
     setFoundPairs([]);
-    dispatch(reset(0));
+    dispatch(resetMatches);
     // setMatches(0);
     setNoMatchFlip(0);
-    dispatch(resetCounters);
+    dispatch(resetFlipTracking);
     // setFlippedCards([]);
     // setFlipCount(0);
     // setMoveCount(0);
@@ -139,21 +154,25 @@ function App() {
     setTimeout(() => {
       if (flippedCardsRedux[0].name === flippedCardsRedux[1].name) {
         dispatch(matchIncrement(1));
+        dispatch(trackMatchedCards(flippedCardsRedux[0].name));
         // setMatches((prev) => prev + 1);
-        setFoundPairs((prev) => [...prev, flippedCardsRedux[0].name]);
+        //
+        // setFoundPairs((prev) => [...prev, flippedCardsRedux[0].name]);
       } else {
         setNoMatchFlip((prev) => prev + 1);
       }
-      setFlipCount(0);
+      // setFlipCount(0);
     }, 800);
-    setMoveCount((prev) => prev + 1);
-    setFlippedCards([]);
     dispatch(resetFlippedCards());
+    dispatch(resetCurrentFlipCount());
+    setMoveCount((prev) => prev + 1);
+    dispatch(incrementTotalMoveCount());
+    // setFlippedCards([]);
   }
 
   // console.log(flippedCardsRedux);
 
-  flippedCardsRedux.length === 2 && matchCheck();
+  // currentFlipCount === 2 && matchCheck();
 
   function resetGame() {
     setGameOverStatus(false);
@@ -215,9 +234,9 @@ function App() {
           flippedCards={flippedCards}
           trackFlips={trackFlippedCards}
           noMatchFlip={noMatchFlip}
-          foundPairs={foundPairs}
-          flipCount={flipCount}
-          setFlipCount={setFlipCount}
+          // foundPairs={foundPairs}
+          // flipCount={flipCount}
+          // setFlipCount={setFlipCount}
           timerActive={timerActive}
           // gameCount={gameCount}
           gameOver={gameOverStatus}

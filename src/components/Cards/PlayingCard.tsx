@@ -4,16 +4,22 @@ import { PlayingCard } from "../../types";
 import Paper from "@mui/material/Paper";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
-import { trackFlips } from "../../features/flippedCards/flippedCardsSlice";
+import {
+  incrementCurrentFlipCount,
+  incrementTotalMoveCount,
+  trackFlips,
+} from "../../features/flippedCards/flippedCardsSlice";
+import { match } from "assert";
+import { increment } from "../../features/counter/counterSlice";
 
 interface Props {
   card: PlayingCard;
   flippedCards: PlayingCard[];
   trackFlips: (card: PlayingCard) => void; // add name of card to array to check for matching
   noMatchFlip: number; //increases when pair doesnt match, triggers flip cards face down again
-  foundPairs: string[];
-  flipCount: number;
-  setFlipCount: Dispatch<SetStateAction<number>>;
+  // foundPairs: string[];
+  // flipCount: number;
+  // setFlipCount: Dispatch<SetStateAction<number>>;
   timerActive: boolean;
   // gameCount: number;
   gameOver: boolean;
@@ -24,9 +30,9 @@ export default function Card({
   // flippedCards,
   // trackFlips,
   noMatchFlip,
-  foundPairs,
-  flipCount,
-  setFlipCount,
+  // foundPairs,
+  // flipCount,
+  // setFlipCount,
   timerActive,
   // gameCount,
   gameOver,
@@ -34,6 +40,13 @@ export default function Card({
   const flippedCardsRedux = useSelector(
     (state: RootState) => state.flippedCards.flippedCards
   );
+  const currentFlipCount = useSelector(
+    (state: RootState) => state.flippedCards.currentFlipCount
+  );
+  const matchedCardsRedux = useSelector(
+    (state: RootState) => state.matches.matchedCards
+  );
+
   const [cardRevealed, setCardRevealed] = useState(false);
   const [clickable, setClickable] = useState(false);
   const [alreadyMatched, setAlreadyMatched] = useState(false);
@@ -50,18 +63,18 @@ export default function Card({
 
   //remove matching cards from board
   useEffect(() => {
-    if (foundPairs.includes(card.name)) {
+    if (matchedCardsRedux.includes(card.name)) {
       setAlreadyMatched(true);
       //line below makes sure cards are face down on new game
       setCardRevealed(false);
     } else {
       setAlreadyMatched(false);
     }
-  }, [card.name, foundPairs]);
+  }, [card.name, matchedCardsRedux]);
 
   //if two cards are showing, disable all cards from flipping
   useEffect(() => {
-    if (flipCount < 2 && timerActive) {
+    if (currentFlipCount < 2 && timerActive) {
       setClickable(true);
 
       if (flippedCardsRedux[0] && flippedCardsRedux[0].id === card.id) {
@@ -70,14 +83,15 @@ export default function Card({
     } else {
       setClickable(false);
     }
-  }, [flipCount, timerActive, flippedCardsRedux, card.id]);
+  }, [currentFlipCount, timerActive, flippedCardsRedux, card.id]);
 
   function clickHandler() {
     setCardRevealed(true);
     setClickable(false);
     dispatch(trackFlips(card));
     // trackFlips(card);
-    setFlipCount((prev) => prev + 1);
+    dispatch(incrementCurrentFlipCount());
+    // setFlipCount((prev) => prev + 1);
   }
 
   function resetCards() {

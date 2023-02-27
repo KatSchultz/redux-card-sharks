@@ -11,9 +11,9 @@ interface Props {
   flippedCards: PlayingCard[];
   trackFlips: (card: PlayingCard) => void;
   noMatchFlip: number;
-  foundPairs: string[];
-  flipCount: number;
-  setFlipCount: Dispatch<SetStateAction<number>>;
+  // foundPairs: string[];
+  // flipCount: number;
+  // setFlipCount: Dispatch<SetStateAction<number>>;
   timerActive: boolean;
   // gameCount: number;
   gameOver: boolean;
@@ -22,9 +22,9 @@ export default function GameBoard({
   flippedCards,
   trackFlips,
   noMatchFlip,
-  foundPairs,
-  flipCount,
-  setFlipCount,
+  // foundPairs,
+  // flipCount,
+  // setFlipCount,
   timerActive,
   // gameCount,
   gameOver,
@@ -51,9 +51,9 @@ export default function GameBoard({
           flippedCards={flippedCards}
           trackFlips={trackFlips}
           noMatchFlip={noMatchFlip}
-          foundPairs={foundPairs}
-          flipCount={flipCount}
-          setFlipCount={setFlipCount}
+          // foundPairs={foundPairs}
+          // flipCount={flipCount}
+          // setFlipCount={setFlipCount}
           timerActive={timerActive}
           // gameCount={gameCount}
           gameOver={gameOver}
