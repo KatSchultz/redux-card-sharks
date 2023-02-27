@@ -29,6 +29,9 @@ export const flippedCardsSlice = createSlice({
     incrementTotalFlipCount: (state) => {
       state.totalFlipCount += 1;
     },
+    resetCounters: (state) => {
+      state = initialState;
+    },
   },
 });
 
@@ -37,6 +40,7 @@ export const {
   resetFlippedCards,
   incrementCurrentFlipCount,
   incrementTotalFlipCount,
+  resetCounters,
 } = flippedCardsSlice.actions;
 
 export default flippedCardsSlice.reducer;

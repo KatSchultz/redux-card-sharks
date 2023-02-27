@@ -27,7 +27,7 @@ const gameCardsSlice = createSlice({
   initialState,
 
   reducers: {
-    shuffleCards: (state, action: PayloadAction<number>) => {
+    shuffleCards: (state) => {
       const clonedCards = initialState.gameCards.slice(0);
       const randomArray = [];
       for (let i = 0; i < 12; i++) {

@@ -15,7 +15,7 @@ interface Props {
   flipCount: number;
   setFlipCount: Dispatch<SetStateAction<number>>;
   timerActive: boolean;
-  gameCount: number;
+  // gameCount: number;
   gameOver: boolean;
 }
 export default function GameBoard({
@@ -26,7 +26,7 @@ export default function GameBoard({
   flipCount,
   setFlipCount,
   timerActive,
-  gameCount,
+  // gameCount,
   gameOver,
 }: Props) {
   const cardsRedux = useSelector(
@@ -55,7 +55,7 @@ export default function GameBoard({
           flipCount={flipCount}
           setFlipCount={setFlipCount}
           timerActive={timerActive}
-          gameCount={gameCount}
+          // gameCount={gameCount}
           gameOver={gameOver}
         />
       ))}

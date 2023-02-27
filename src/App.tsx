@@ -12,7 +12,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "./app/store";
 import { matchIncrement, reset } from "./features/matches/matchSlice";
 import { shuffleCards } from "./features/gameCards/gameCardsSlice";
-import { resetFlippedCards } from "./features/flippedCards/flippedCardsSlice";
+import {
+  resetCounters,
+  resetFlippedCards,
+} from "./features/flippedCards/flippedCardsSlice";
 
 function App() {
   const matchesRedux = useSelector((state: RootState) => state.matches.matches);
@@ -39,7 +42,7 @@ function App() {
   const [flipCount, setFlipCount] = useState(0);
   const [moveCount, setMoveCount] = useState(0);
   const [flippedCards, setFlippedCards] = useState<PlayingCard[]>([]); // holds 2 active cards for comparison
-  const [matches, setMatches] = useState(0);
+  // const [matches, setMatches] = useState(0);
   const [noMatchFlip, setNoMatchFlip] = useState(0);
   const [foundPairs, setFoundPairs] = useState<string[]>([]);
   const startTime = 25;
@@ -54,6 +57,8 @@ function App() {
   //   setActiveCards(cards.slice(0, gameSize));
   // }, [gameSize]);
 
+  console.log(matchesRedux);
+
   useEffect(() => {
     if (matchesRedux === gameSize / 2) {
       // if (matches === gameSize / 2) {
@@ -61,7 +66,7 @@ function App() {
       setTimerActive(false);
       handleOpenModal();
     }
-  }, [matches, gameSize]);
+  }, [matchesRedux, gameSize]);
 
   useEffect(() => {
     if (timer === 0 && winStatus !== true) {
@@ -97,20 +102,21 @@ function App() {
 
   function startGame() {
     setTimer(startTime);
-    setGameCount((prev) => prev + 1);
+    // setGameCount((prev) => prev + 1);
     // const cardArray = cardsRedux;
     // const shuffledArray = justShuffle(cardArray);
-    dispatch(shuffleCards(0));
+    dispatch(shuffleCards());
     // setActiveCards(shuffledArray);
     setGameOverStatus(false);
     setWinStatus(false);
     setFoundPairs([]);
-    setFlippedCards([]);
     dispatch(reset(0));
     // setMatches(0);
     setNoMatchFlip(0);
-    setFlipCount(0);
-    setMoveCount(0);
+    dispatch(resetCounters);
+    // setFlippedCards([]);
+    // setFlipCount(0);
+    // setMoveCount(0);
   }
 
   function justShuffle(array: PlayingCard[]) {
@@ -145,7 +151,7 @@ function App() {
     dispatch(resetFlippedCards());
   }
 
-  console.log(flippedCardsRedux);
+  // console.log(flippedCardsRedux);
 
   flippedCardsRedux.length === 2 && matchCheck();
 
@@ -153,7 +159,7 @@ function App() {
     setGameOverStatus(false);
     startGame();
     setTimerActive(true);
-    setGameCount((prev) => prev + 1);
+    // setGameCount((prev) => prev + 1);
   }
 
   // function winGame() {
@@ -213,7 +219,7 @@ function App() {
           flipCount={flipCount}
           setFlipCount={setFlipCount}
           timerActive={timerActive}
-          gameCount={gameCount}
+          // gameCount={gameCount}
           gameOver={gameOverStatus}
         />
         {/* </Container> */}
