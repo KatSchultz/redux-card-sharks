@@ -74,23 +74,25 @@ export default function Card({
 
   //if two cards are showing, disable all cards from flipping
   useEffect(() => {
+    console.log(currentFlipCount, timerActive);
+    if (currentFlipCount === 2) {
+      setClickable(false);
+    }
+    if (flippedCardsRedux[0] && flippedCardsRedux[0].id === card.id) {
+      setClickable(false);
+      //prevents flipped card from matching with itself
+    }
     if (currentFlipCount < 2 && timerActive) {
       setClickable(true);
-
-      if (flippedCardsRedux[0] && flippedCardsRedux[0].id === card.id) {
-        setClickable(false); //prevents flipped card from matching with itself
-      }
-    } else {
-      setClickable(false);
     }
   }, [currentFlipCount, timerActive, flippedCardsRedux, card.id]);
 
   function clickHandler() {
+    dispatch(incrementCurrentFlipCount());
     setCardRevealed(true);
     setClickable(false);
     dispatch(trackFlips(card));
     // trackFlips(card);
-    dispatch(incrementCurrentFlipCount());
     // setFlipCount((prev) => prev + 1);
   }
 

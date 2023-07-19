@@ -33,9 +33,7 @@ export const flippedCardsSlice = createSlice({
     incrementTotalMoveCount: (state) => {
       state.totalMoveCount += 1;
     },
-    resetFlipTracking: (state) => {
-      state = initialState;
-    },
+    resetFlipTracking: () => initialState,
   },
 });
 

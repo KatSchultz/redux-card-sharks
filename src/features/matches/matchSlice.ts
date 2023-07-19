@@ -23,9 +23,7 @@ export const matchSlice = createSlice({
     trackMatchedCards: (state, action: PayloadAction<string>) => {
       state.matchedCards.push(action.payload);
     },
-    resetMatches: (state) => {
-      state = initialState;
-    },
+    resetMatches: () => initialState,
   },
 });
 

@@ -48,7 +48,7 @@ function App() {
   //   { id: 12, name: "whale shark", image: "/images/img-5.png" },
   // ]);
   const [gameSize, setGameSize] = useState(12);
-  const [flipCount, setFlipCount] = useState(0);
+  // const [flipCount, setFlipCount] = useState(0);
   const [moveCount, setMoveCount] = useState(0);
   const [flippedCards, setFlippedCards] = useState<PlayingCard[]>([]); // holds 2 active cards for comparison
   // const [matches, setMatches] = useState(0);
@@ -90,31 +90,6 @@ function App() {
     }
   }, [currentFlipCount]);
 
-  // const cards = [
-  // { id: 1, name: "stingray", image: "/images/img-0.png" },
-  // { id: 2, name: "stingray", image: "/images/img-0.png" },
-  // { id: 3, name: "blue hippo tang", image: "/images/img-1.png" },
-  // { id: 4, name: "blue hippo tang", image: "/images/img-1.png" },
-  // { id: 5, name: "clownfish", image: "/images/img-2.png" },
-  // { id: 6, name: "clownfish", image: "/images/img-2.png" },
-  // { id: 7, name: "octopus", image: "/images/img-3.png" },
-  // { id: 8, name: "octopus", image: "/images/img-3.png" },
-  // { id: 9, name: "sea turtle", image: "/images/img-4.png" },
-  // { id: 10, name: "sea turtle", image: "/images/img-4.png" },
-  // { id: 11, name: "whale shark", image: "/images/img-5.png" },
-  // { id: 12, name: "whale shark", image: "/images/img-5.png" },
-  // { id: 13, name: "great white shark", image: "/images/img-6.png" },
-  // { id: 14, name: "great white shark", image: "/images/img-6.png" },
-  // { id: 15, name: "squid", image: "/images/img-7.png" },
-  // { id: 16, name: "squid", image: "/images/img-7.png" },
-  // { id: 17, name: "orca", image: "/images/img-8.png" },
-  // { id: 18, name: "orca", image: "/images/img-8.png" },
-  // { id: 19, name: "crab", image: "/images/img-9.png" },
-  // { id: 20, name: "crab", image: "/images/img-9.png" },
-  // { id: 21, name: "seahorse", image: "/images/img-10.png" },
-  // { id: 22, name: "seahorse", image: "/images/img-10.png" },
-  // ];
-
   function startGame() {
     setTimer(startTime);
     // setGameCount((prev) => prev + 1);
@@ -125,25 +100,25 @@ function App() {
     setGameOverStatus(false);
     setWinStatus(false);
     setFoundPairs([]);
-    dispatch(resetMatches);
+    dispatch(resetMatches());
     // setMatches(0);
     setNoMatchFlip(0);
-    dispatch(resetFlipTracking);
+    dispatch(resetFlipTracking());
     // setFlippedCards([]);
     // setFlipCount(0);
     // setMoveCount(0);
   }
 
-  function justShuffle(array: PlayingCard[]) {
-    const clonedArray = array;
-    const randomArray = [];
-    for (let i = 0; i < gameSize; i++) {
-      let randomIndex = Math.floor(Math.random() * clonedArray.length);
-      randomArray.push(clonedArray[randomIndex]);
-      clonedArray.splice(randomIndex, 1);
-    }
-    return randomArray;
-  }
+  // function justShuffle(array: PlayingCard[]) {
+  //   const clonedArray = array;
+  //   const randomArray = [];
+  //   for (let i = 0; i < gameSize; i++) {
+  //     let randomIndex = Math.floor(Math.random() * clonedArray.length);
+  //     randomArray.push(clonedArray[randomIndex]);
+  //     clonedArray.splice(randomIndex, 1);
+  //   }
+  //   return randomArray;
+  // }
 
   function trackFlippedCards(card: PlayingCard) {
     setFlippedCards((prev: PlayingCard[]) => [...prev, card]);
@@ -162,9 +137,9 @@ function App() {
         setNoMatchFlip((prev) => prev + 1);
       }
       // setFlipCount(0);
+      dispatch(resetCurrentFlipCount());
     }, 800);
     dispatch(resetFlippedCards());
-    dispatch(resetCurrentFlipCount());
     setMoveCount((prev) => prev + 1);
     dispatch(incrementTotalMoveCount());
     // setFlippedCards([]);
@@ -178,6 +153,8 @@ function App() {
     setGameOverStatus(false);
     startGame();
     setTimerActive(true);
+    dispatch(resetMatches());
+
     // setGameCount((prev) => prev + 1);
   }
 
