@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./PlayingCard.css";
 import { PlayingCard } from "../../types";
 import Paper from "@mui/material/Paper";
@@ -6,35 +6,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import {
   incrementCurrentFlipCount,
-  incrementTotalMoveCount,
   trackFlips,
 } from "../../features/flippedCards/flippedCardsSlice";
-import { match } from "assert";
-import { increment } from "../../features/counter/counterSlice";
 
 interface Props {
   card: PlayingCard;
-  flippedCards: PlayingCard[];
-  trackFlips: (card: PlayingCard) => void; // add name of card to array to check for matching
   noMatchFlip: number; //increases when pair doesnt match, triggers flip cards face down again
-  // foundPairs: string[];
-  // flipCount: number;
-  // setFlipCount: Dispatch<SetStateAction<number>>;
   timerActive: boolean;
-  // gameCount: number;
   gameOver: boolean;
 }
 
 export default function Card({
   card,
-  // flippedCards,
-  // trackFlips,
   noMatchFlip,
-  // foundPairs,
-  // flipCount,
-  // setFlipCount,
   timerActive,
-  // gameCount,
   gameOver,
 }: Props) {
   const flippedCardsRedux = useSelector(
@@ -74,7 +59,6 @@ export default function Card({
 
   //if two cards are showing, disable all cards from flipping
   useEffect(() => {
-    console.log(currentFlipCount, timerActive);
     if (currentFlipCount === 2) {
       setClickable(false);
     }
@@ -88,12 +72,10 @@ export default function Card({
   }, [currentFlipCount, timerActive, flippedCardsRedux, card.id]);
 
   function clickHandler() {
-    dispatch(incrementCurrentFlipCount());
     setCardRevealed(true);
     setClickable(false);
     dispatch(trackFlips(card));
-    // trackFlips(card);
-    // setFlipCount((prev) => prev + 1);
+    dispatch(incrementCurrentFlipCount());
   }
 
   function resetCards() {

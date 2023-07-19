@@ -8,8 +8,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 
 interface Props {
-  flippedCards: PlayingCard[];
-  trackFlips: (card: PlayingCard) => void;
+  // flippedCards: PlayingCard[];
+  // trackFlips: (card: PlayingCard) => void;
   noMatchFlip: number;
   // foundPairs: string[];
   // flipCount: number;
@@ -19,8 +19,8 @@ interface Props {
   gameOver: boolean;
 }
 export default function GameBoard({
-  flippedCards,
-  trackFlips,
+  // flippedCards,
+  // trackFlips,
   noMatchFlip,
   // foundPairs,
   // flipCount,
@@ -48,8 +48,8 @@ export default function GameBoard({
         <Card
           key={card.id}
           card={card}
-          flippedCards={flippedCards}
-          trackFlips={trackFlips}
+          // flippedCards={flippedCards}
+          // trackFlips={trackFlips}
           noMatchFlip={noMatchFlip}
           // foundPairs={foundPairs}
           // flipCount={flipCount}
