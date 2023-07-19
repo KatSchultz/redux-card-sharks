@@ -22,7 +22,6 @@ export const flippedCardsSlice = createSlice({
     },
     resetFlippedCards: (state) => {
       state.flippedCards = [];
-      // state.currentFlipCount = 0;
     },
     incrementCurrentFlipCount: (state) => {
       state.currentFlipCount += 1;

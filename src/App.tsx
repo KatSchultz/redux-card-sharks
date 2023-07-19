@@ -27,9 +27,11 @@ function App() {
   const currentFlipCount = useSelector(
     (state: RootState) => state.flippedCards.currentFlipCount
   );
+  const moveCount = useSelector(
+    (state: RootState) => state.flippedCards.totalMoveCount
+  );
   const dispatch = useDispatch();
 
-  const [moveCount, setMoveCount] = useState(0);
   const [noMatchFlip, setNoMatchFlip] = useState(0);
   const startTime = 25;
   const [timer, setTimer] = useState(25);
