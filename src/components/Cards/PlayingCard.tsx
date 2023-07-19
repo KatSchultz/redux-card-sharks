@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./PlayingCard.css";
 import { PlayingCard } from "../../types";
-import Paper from "@mui/material/Paper";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import {
@@ -84,19 +83,6 @@ export default function Card({
   }
 
   return (
-    // <Paper
-    //   elevation={1}
-    //   sx={{
-    //     background: "transparent",
-    //     boxShadow: "none",
-    //   }}
-    //   className={"playing-card " + hiddenClass + animateFlip}
-    //   onClick={clickable ? clickHandler : () => {}}
-    // >
-    // <div
-    //   className={"playing-card " + hiddenClass + animateFlip}
-    //   onClick={clickable ? clickHandler : () => {}}
-    // >
     <div
       className={"card-faces playing-card " + hiddenClass + animateFlip}
       onClick={clickable ? clickHandler : () => {}}
@@ -122,7 +108,5 @@ export default function Card({
         </picture>
       </div>
     </div>
-    // </div>
-    // </Paper>
   );
 }

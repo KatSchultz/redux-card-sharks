@@ -1,15 +1,3 @@
-.card-placeholder {
-  width: 100%;
-  height: 100%;
-  background-color: orange;
-}
-
-.placeholder-fish-side {
-  background-color: yellowgreen;
-  width: 100%;
-  height: 100%;
-}
-
 .playing-card {
   aspect-ratio: 1/1;
   min-width: 50px;

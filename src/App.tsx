@@ -3,12 +3,9 @@ import "./App.css";
 import Header from "./components/header/Header";
 import Directions from "./components/Directions/Directions";
 import GameBoard from "./components/GameBoard/GameBoard";
-import { PlayingCard } from "./types";
 import Modal from "./components/Modal/Modal";
-import { Container } from "@mui/material";
-import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "./app/store";
+import { RootState } from "./app/store";
 import {
   matchIncrement,
   resetMatches,
@@ -32,16 +29,15 @@ function App() {
   );
   const dispatch = useDispatch();
 
-  const [gameSize, setGameSize] = useState(12);
   const [moveCount, setMoveCount] = useState(0);
   const [noMatchFlip, setNoMatchFlip] = useState(0);
-  const [foundPairs, setFoundPairs] = useState<string[]>([]);
   const startTime = 25;
   const [timer, setTimer] = useState(25);
   const [timerActive, setTimerActive] = useState(false);
   const [gameOverStatus, setGameOverStatus] = useState(false);
   const [winStatus, setWinStatus] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const gameSize = 12;
 
   useEffect(() => {
     if (matchesRedux === gameSize / 2) {
@@ -91,24 +87,7 @@ function App() {
   function resetGame() {
     startGame();
     setTimerActive(true);
-
-    // setGameCount((prev) => prev + 1);
   }
-
-  // function winGame() {
-  //   setWinStatus(true);
-  //   //stop timer
-  //   setTimerActive(false);
-  //   //display modal
-  //   handleOpenModal();
-  //   //set all cards face down
-  // }
-
-  // function gameOver() {
-  //   //turn all cards face down
-  //   setGameOverStatus(true);
-  //   handleOpenModal();
-  // }
 
   function handleOpenModal() {
     setOpenModal(true);
@@ -128,12 +107,6 @@ function App() {
       />
       <Header />
 
-      {/* <Container
-        sx={{
-          display: "flex",
-          flexDirection: { xs: "column", sm: "row" },
-        }}
-      > */}
       <div className="main-content">
         <Directions
           startGame={startGame}
@@ -143,13 +116,11 @@ function App() {
           setTimer={setTimer}
           resetGame={resetGame}
         />
-
         <GameBoard
           noMatchFlip={noMatchFlip}
           timerActive={timerActive}
           gameOver={gameOverStatus}
         />
-        {/* </Container> */}
       </div>
     </div>
   );
