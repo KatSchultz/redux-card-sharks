@@ -105,7 +105,6 @@ function App() {
         closeModal={handleCloseModal}
         winStatus={winStatus}
         timer={timer}
-        moveCount={moveCount}
       />
       <Header />
 

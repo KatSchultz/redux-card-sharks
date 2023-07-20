@@ -3,13 +3,14 @@ import Typography from "@mui/material/Typography";
 import MuiModal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import { Button, styled } from "@mui/material";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
 
 interface Props {
   modalDisplay: boolean;
   closeModal: () => void;
   winStatus: boolean;
   timer: number;
-  moveCount: number;
 }
 
 export default function Modal({
@@ -17,8 +18,9 @@ export default function Modal({
   closeModal,
   winStatus,
   timer,
-  moveCount,
 }: Props) {
+  const moveCount = useSelector((state: RootState) => state.matches.matches);
+
   const CustomButton = styled(Button)({
     backgroundColor: "#dad806",
     ":hover": {

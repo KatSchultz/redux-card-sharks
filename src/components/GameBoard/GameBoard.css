@@ -1,19 +1,21 @@
 .game-board {
-  width: 100%;
+  min-width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 1rem;
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 600px) {
   .game-board {
     grid-template-columns: 1fr 1fr 1fr;
     min-height: 100%;
+    min-width: 50%;
   }
 }
 @media only screen and (min-width: 900px) {
   .game-board {
     grid-template-columns: 1fr 1fr 1fr 1fr;
     min-height: 100%;
+    min-width: 75%;
   }
 }

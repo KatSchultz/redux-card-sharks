@@ -12,6 +12,4 @@ export default function Header() {
       CARD SHARKS
     </Typography>
   );
-
-  // <h1 className="title">CARD SHARKS</h1>;
 }
