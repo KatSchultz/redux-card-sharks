@@ -10,17 +10,11 @@ import {
 
 interface Props {
   card: PlayingCard;
-  noMatchFlip: number; //increases when pair doesnt match, triggers flip cards face down again
   timerActive: boolean;
   gameOver: boolean;
 }
 
-export default function Card({
-  card,
-  noMatchFlip,
-  timerActive,
-  gameOver,
-}: Props) {
+export default function Card({ card, timerActive, gameOver }: Props) {
   const flippedCardsRedux = useSelector(
     (state: RootState) => state.flippedCards.flippedCards
   );
@@ -29,6 +23,9 @@ export default function Card({
   );
   const matchedCardsRedux = useSelector(
     (state: RootState) => state.matches.matchedCards
+  );
+  const noMatch = useSelector(
+    (state: RootState) => state.flippedCards.noMatchCount
   );
 
   const [cardRevealed, setCardRevealed] = useState(false);
@@ -43,31 +40,31 @@ export default function Card({
   //flips mismatched pair back over
   useEffect(() => {
     resetCards();
-  }, [noMatchFlip, gameOver]);
+  }, [noMatch, gameOver]);
 
   //remove matching cards from board
   useEffect(() => {
     if (matchedCardsRedux.includes(card.name)) {
       setAlreadyMatched(true);
-      //line below makes sure cards are face down on new game
-      setCardRevealed(false);
+      setCardRevealed(false); // makes sure cards are face down on new game
     } else {
       setAlreadyMatched(false);
     }
   }, [card.name, matchedCardsRedux]);
 
-  //if two cards are showing, disable all cards from flipping
+  // when to disable card flipping
   useEffect(() => {
     if (currentFlipCount === 2) {
       setClickable(false);
+    }
+    if (currentFlipCount < 2 && timerActive) {
+      setClickable(true);
     }
     if (flippedCardsRedux[0] && flippedCardsRedux[0].id === card.id) {
       setClickable(false);
       //prevents flipped card from matching with itself
     }
-    if (currentFlipCount < 2 && timerActive) {
-      setClickable(true);
-    }
+    if (!timerActive) setClickable(false);
   }, [currentFlipCount, timerActive, flippedCardsRedux, card.id]);
 
   function clickHandler() {

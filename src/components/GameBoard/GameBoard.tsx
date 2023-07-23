@@ -6,15 +6,10 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 
 interface Props {
-  noMatchFlip: number;
   timerActive: boolean;
   gameOver: boolean;
 }
-export default function GameBoard({
-  noMatchFlip,
-  timerActive,
-  gameOver,
-}: Props) {
+export default function GameBoard({ timerActive, gameOver }: Props) {
   const cardsRedux = useSelector(
     (state: RootState) => state.gameCards.gameCards
   );
@@ -25,7 +20,6 @@ export default function GameBoard({
         <Card
           key={card.id}
           card={card}
-          noMatchFlip={noMatchFlip}
           timerActive={timerActive}
           gameOver={gameOver}
         />

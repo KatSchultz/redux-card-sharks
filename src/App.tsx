@@ -17,6 +17,7 @@ import {
   resetFlippedCards,
   incrementTotalMoveCount,
   resetCurrentFlipCount,
+  incrementNoMatchCount,
 } from "./features/flippedCards/flippedCardsSlice";
 
 function App() {
@@ -27,12 +28,7 @@ function App() {
   const currentFlipCount = useSelector(
     (state: RootState) => state.flippedCards.currentFlipCount
   );
-  const moveCount = useSelector(
-    (state: RootState) => state.flippedCards.totalMoveCount
-  );
   const dispatch = useDispatch();
-
-  const [noMatchFlip, setNoMatchFlip] = useState(0);
   const startTime = 25;
   const [timer, setTimer] = useState(25);
   const [timerActive, setTimerActive] = useState(false);
@@ -68,7 +64,7 @@ function App() {
         dispatch(matchIncrement(1));
         dispatch(trackMatchedCards(flippedCardsRedux[0].name));
       } else {
-        setNoMatchFlip((prev) => prev + 1);
+        dispatch(incrementNoMatchCount());
       }
       dispatch(resetCurrentFlipCount());
     }, 800);
@@ -83,7 +79,6 @@ function App() {
     dispatch(shuffleCards());
     dispatch(resetMatches());
     dispatch(resetFlipTracking());
-    setNoMatchFlip(0);
   }
 
   function resetGame() {
@@ -117,11 +112,7 @@ function App() {
           setTimer={setTimer}
           resetGame={resetGame}
         />
-        <GameBoard
-          noMatchFlip={noMatchFlip}
-          timerActive={timerActive}
-          gameOver={gameOverStatus}
-        />
+        <GameBoard timerActive={timerActive} gameOver={gameOverStatus} />
       </div>
     </div>
   );

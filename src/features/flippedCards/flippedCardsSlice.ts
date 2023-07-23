@@ -5,12 +5,14 @@ interface FlippedCardsState {
   flippedCards: PlayingCard[];
   currentFlipCount: number;
   totalMoveCount: number;
+  noMatchCount: number;
 }
 
 const initialState: FlippedCardsState = {
   flippedCards: [],
   currentFlipCount: 0,
   totalMoveCount: 0,
+  noMatchCount: 0,
 };
 
 export const flippedCardsSlice = createSlice({
@@ -32,6 +34,9 @@ export const flippedCardsSlice = createSlice({
     incrementTotalMoveCount: (state) => {
       state.totalMoveCount += 1;
     },
+    incrementNoMatchCount: (state) => {
+      state.noMatchCount += 1;
+    },
     resetFlipTracking: () => initialState,
   },
 });
@@ -41,6 +46,7 @@ export const {
   resetFlippedCards,
   incrementCurrentFlipCount,
   incrementTotalMoveCount,
+  incrementNoMatchCount,
   resetCurrentFlipCount,
   resetFlipTracking,
 } = flippedCardsSlice.actions;

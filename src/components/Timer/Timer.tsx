@@ -25,5 +25,5 @@ export default function Timer({
     return () => clearTimeout(timeUpdate);
   }, [timer, timerActive, setTimer, setTimerActive]);
 
-  return <h2 className="title-secondary">{timer}</h2>;
+  return <h2 className="title-secondary timer">{timer}</h2>;
 }

@@ -51,13 +51,14 @@ export default function GameButtons({
 
   return (
     <Stack
-      spacing={3}
+      spacing={2}
       direction="row"
       className="btn-container"
       alignItems="center"
       justifyContent="space-between"
       width={"100%"}
       mb="1rem"
+      display={"flex"}
     >
       <CustomButton
         variant="contained"
