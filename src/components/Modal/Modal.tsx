@@ -19,7 +19,9 @@ export default function Modal({
   winStatus,
   timer,
 }: Props) {
-  const moveCount = useSelector((state: RootState) => state.matches.matches);
+  const moveCount = useSelector(
+    (state: RootState) => state.flippedCards.totalMoveCount
+  );
 
   const CustomButton = styled(Button)({
     backgroundColor: "#dad806",
